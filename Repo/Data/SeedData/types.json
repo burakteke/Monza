@@ -1,0 +1,18 @@
+[
+  {
+    "Id": 1,
+    "Name": "Plazma Tv"
+  },
+  {
+    "Id": 2,
+    "Name": "Lcd Tv"
+  },
+  {
+    "Id": 3,
+    "Name": "Led Tv"
+  },
+  {
+    "Id": 4,
+    "Name": "Smart Tv"
+  }
+]
