@@ -9,9 +9,7 @@ using Repo.Data;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductController : ControllerBase
+    public class ProductController : BaseApiController
     {
         public IGenericRepository<Product> ProductRepo { get; }
         public IGenericRepository<ProductBrand> BrandRepo { get; }

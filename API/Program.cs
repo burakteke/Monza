@@ -1,5 +1,9 @@
+using API.Errors;
+using API.Extensions;
 using API.Helper;
+using API.Middleware;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repo.Data;
 using Repo.Data.SeedData;
@@ -16,7 +20,9 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerServices();
+
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
@@ -36,12 +42,15 @@ using(var scope = app.Services.CreateScope())
     }
 }
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerDocumentation();
 }
+
+app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
 app.UseHttpsRedirection();
 
