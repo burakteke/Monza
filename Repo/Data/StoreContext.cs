@@ -18,6 +18,18 @@ namespace Repo.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            if(Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite")
+            {
+                foreach (var item in modelBuilder.Model.GetEntityTypes())
+                {
+                    var props = item.ClrType.GetProperties().Where(p => p.PropertyType == typeof(decimal));
+                    foreach (var prop in props)
+                    {
+                        modelBuilder.Entity(item.Name).Property(prop.Name).HasConversion<double>();
+                    }
+                }
+            }
         }
     }
 }
